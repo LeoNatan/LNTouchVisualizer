@@ -25,6 +25,24 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 	return NO;
 }
 
+- (UIViewController*)rootViewController
+{
+	for(UIWindow* window in self.windowScene.windows)
+	{
+		if(self == window)
+		{
+			continue;
+		}
+		
+		if(window.isKeyWindow)
+		{
+			return window.rootViewController;
+		}
+	}
+	
+	return super.rootViewController;
+}
+
 @end
 
 @interface UIWindow (TouchVisualizerForwarding) @end

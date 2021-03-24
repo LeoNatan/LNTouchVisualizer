@@ -17,18 +17,20 @@
 // overlay window a candidate for controlling the status bar.
 - (UIViewController*)rootViewController
 {
-    for(UIWindow* window in UIApplication.sharedApplication.windows)
+	for(UIWindow* window in self.windowScene.windows)
 	{
-        if(self == window)
+		if(self == window)
 		{
-            continue;
-        }
-        if(window.rootViewController != nil)
+			continue;
+		}
+		
+		if(window.isKeyWindow)
 		{
-            return window.rootViewController;
-        }
-    }
-    return super.rootViewController;
+			return window.rootViewController;
+		}
+	}
+	
+	return super.rootViewController;
 }
 
 @end
