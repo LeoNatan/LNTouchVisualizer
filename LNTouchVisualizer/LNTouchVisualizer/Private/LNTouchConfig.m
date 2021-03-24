@@ -15,21 +15,16 @@ static const NSTimeInterval LNTouchConfigRippleFadeDuration = 0.2;
 
 @implementation LNTouchConfig
 
-- (instancetype)initWithTouchConfigType:(LNTouchConfigTpye)configType
+- (instancetype)init
 {
     self = [super init];
     
-	if (self)
+	if(self)
 	{
-        switch (configType)
-		{
-            case LNTouchConfigTpyeContact:
-                [self _configureContact];
-                break;
-            case LNTouchConfigTpyeRipple:
-                [self _configureRipple];
-                break;
-        }
+		self.strokeColor = UIColor.labelColor;
+		self.fillColor = UIColor.systemBackgroundColor;
+		self.alpha = LNTouchConfigContactAlpha;
+		self.fadeDuration = LNTouchConfigContactFadeDuration;
     }
     
 	return self;
@@ -37,20 +32,21 @@ static const NSTimeInterval LNTouchConfigRippleFadeDuration = 0.2;
 
 #pragma mark - Private
 
-- (void)_configureContact
++ (LNTouchConfig *)touchConfig
 {
-    self.strokeColor = UIColor.labelColor;
-    self.fillColor = UIColor.systemBackgroundColor;
-    self.alpha = LNTouchConfigContactAlpha;
-    self.fadeDuration = LNTouchConfigContactFadeDuration;
+	return [LNTouchConfig new];
 }
 
-- (void)_configureRipple
++ (LNTouchConfig *)rippleConfig
 {
-    self.strokeColor = UIColor.systemBackgroundColor;
-    self.fillColor = UIColor.systemBlueColor;
-    self.alpha = LNTouchConfigRippleAlpha;
-    self.fadeDuration = LNTouchConfigRippleFadeDuration;
+	LNTouchConfig* rv = [LNTouchConfig new];
+	
+	rv.strokeColor = UIColor.systemBackgroundColor;
+	rv.fillColor = UIColor.systemBlueColor;
+	rv.alpha = LNTouchConfigRippleAlpha;
+	rv.fadeDuration = LNTouchConfigRippleFadeDuration;
+	
+	return rv;
 }
 
 @end

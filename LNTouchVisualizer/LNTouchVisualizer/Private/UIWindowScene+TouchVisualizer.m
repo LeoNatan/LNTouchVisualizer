@@ -42,12 +42,15 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 
 - (void)__ln_vis_sendEvent:(UIEvent *)event
 {
-	if([self isKindOfClass:[LNTouchVisualizerWindow class]])
+	if([self isKindOfClass:[_LNSceneTouchVisualizerWindow class]])
 	{
 		return;
 	}
 	
-	[self.windowScene.touchVisualizerWindow sendEvent:event];
+	if(self.windowScene.touchVisualizerEnabled)
+	{
+		[self.windowScene.touchVisualizerWindow sendEvent:event];
+	}
 	[self __ln_vis_sendEvent:event];
 }
 
@@ -61,15 +64,15 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 	
 	if(rv == nil)
 	{
-		_LNSceneTouchVisualizerWindow* window = [_LNSceneTouchVisualizerWindow new];
-		window.windowLevel = 100000000000;
-		window.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0.0];
-		window.hidden = NO;
-		window.userInteractionEnabled = NO;
-		window.frame = UIScreen.mainScreen.bounds;
-		window.windowScene = self;
+		rv = [_LNSceneTouchVisualizerWindow new];
+		rv.windowLevel = 100000000000;
+		rv.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0.0];
+		rv.hidden = YES;
+		rv.userInteractionEnabled = NO;
+		rv.frame = UIScreen.mainScreen.bounds;
+		rv.windowScene = self;
 		
-		objc_setAssociatedObject(self, LNTouchVisualizerWindowKey, window, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+		objc_setAssociatedObject(self, LNTouchVisualizerWindowKey, rv, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	}
 	
 	return rv;
@@ -82,7 +85,7 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 
 - (BOOL)touchVisualizerEnabled
 {
-	return self.touchVisualizerWindow.hidden != NO;
+	return self.touchVisualizerWindow.hidden == NO;
 }
 
 @end

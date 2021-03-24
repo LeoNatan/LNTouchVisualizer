@@ -44,8 +44,8 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 	{
 		_morphEnabled = morphEnabled;
 		_touchVisibility = touchVisibility;
-		_touchContactConfig = contactConfig ?: [[LNTouchConfig alloc] initWithTouchConfigType:LNTouchConfigTpyeContact];
-		_touchRippleConfig = rippleConfig ?: [[LNTouchConfig alloc] initWithTouchConfigType:LNTouchConfigTpyeRipple];
+		_touchContactConfig = contactConfig ?: [LNTouchConfig touchConfig];
+		_touchRippleConfig = rippleConfig ?: [LNTouchConfig rippleConfig];
 	}
 	return self;
 }

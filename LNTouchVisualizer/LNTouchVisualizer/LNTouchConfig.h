@@ -8,10 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, LNTouchConfigTpye) {
-    LNTouchConfigTpyeContact,
-    LNTouchConfigTpyeRipple,
-};
+NS_ASSUME_NONNULL_BEGIN
 
 @interface LNTouchConfig : NSObject
 
@@ -20,7 +17,9 @@ typedef NS_ENUM(NSUInteger, LNTouchConfigTpye) {
 @property (nonatomic, strong, nullable) UIColor *strokeColor;
 @property (nonatomic, strong, nullable) UIColor *fillColor;
 
-- (nonnull instancetype)initWithTouchConfigType:(LNTouchConfigTpye)configType NS_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)init NS_UNAVAILABLE;
+@property (nonatomic, class, strong, readonly) LNTouchConfig* rippleConfig;
+@property (nonatomic, class, strong, readonly) LNTouchConfig* touchConfig;
 
 @end
+
+NS_ASSUME_NONNULL_END
