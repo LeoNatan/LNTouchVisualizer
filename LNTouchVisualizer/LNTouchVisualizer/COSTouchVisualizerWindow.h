@@ -7,7 +7,8 @@
 //
 #include <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, COSTouchVisualizerWindowTouchVisibility) {
+typedef NS_ENUM(NSUInteger, COSTouchVisualizerWindowTouchVisibility)
+{
     COSTouchVisualizerWindowTouchVisibilityNever,
     COSTouchVisualizerWindowTouchVisibilityRemoteOnly,
     COSTouchVisualizerWindowTouchVisibilityRemoteAndLocal,
