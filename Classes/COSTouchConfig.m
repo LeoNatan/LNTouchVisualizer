@@ -15,10 +15,14 @@ static const NSTimeInterval COSTouchConfigRippleFadeDuration = 0.2;
 
 @implementation COSTouchConfig
 
--(instancetype)initWithTouchConfigType:(COSTouchConfigTpye)configType {
+-(instancetype)initWithTouchConfigType:(COSTouchConfigTpye)configType
+{
     self = [super init];
-    if (self) {
-        switch (configType) {
+    
+	if (self)
+	{
+        switch (configType)
+		{
             case COSTouchConfigTpyeContact:
                 [self _configureContact];
                 break;
@@ -27,21 +31,24 @@ static const NSTimeInterval COSTouchConfigRippleFadeDuration = 0.2;
                 break;
         }
     }
-    return self;
+    
+	return self;
 }
 
 #pragma mark - Private
 
--(void)_configureContact {
-    self.strokeColor = [UIColor blackColor];
-    self.fillColor = [UIColor blackColor];
+-(void)_configureContact
+{
+    self.strokeColor = UIColor.blackColor;
+    self.fillColor = UIColor.blackColor;
     self.alpha = COSTouchConfigContactAlpha;
     self.fadeDuration = COSTouchConfigContactFadeDuration;
 }
 
-- (void)_configureRipple {
-    self.strokeColor = [UIColor whiteColor];
-    self.fillColor = [UIColor blueColor];
+- (void)_configureRipple
+{
+    self.strokeColor = UIColor.whiteColor;
+    self.fillColor = UIColor.blueColor;
     self.alpha = COSTouchConfigRippleAlpha;
     self.fadeDuration = COSTouchConfigRippleFadeDuration;
 }

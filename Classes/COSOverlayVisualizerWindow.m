@@ -15,17 +15,20 @@
 // application window.
 // Fixes problems with status bar hiding, because it considers the
 // overlay window a candidate for controlling the status bar.
-- (UIViewController *)rootViewController {
-    
-    for (UIWindow *window in [UIApplication sharedApplication].windows) {
-        if (self == window) {
+- (UIViewController *)rootViewController
+{
+    for(UIWindow *window in UIApplication.sharedApplication.windows)
+	{
+        if(self == window)
+		{
             continue;
         }
-        if (window.rootViewController != nil) {
+        if(window.rootViewController != nil)
+		{
             return window.rootViewController;
         }
     }
-    return [super rootViewController];
+    return super.rootViewController;
 }
 
 @end
