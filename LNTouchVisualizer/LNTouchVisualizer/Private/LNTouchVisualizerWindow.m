@@ -1,16 +1,16 @@
 //
-//  COSTouchVisualizerWindow.m
+//  LNTouchVisualizerWindow.m
 //  TouchVisualizer
 //
 //  Created by Joe Blau on 3/22/14.
 //  Copyright (c) 2014 conopsys. All rights reserved.
 //
 
-#import "COSTouchVisualizerWindow.h"
-#import "COSOverlayVisualizerWindow.h"
-#import "COSTouchImageView.h"
-#import "COSTouchConfig.h"
-#import "COSTouchImageFactory.h"
+#import "LNTouchVisualizerWindow.h"
+#import "LNOverlayVisualizerWindow.h"
+#import "LNTouchImageView.h"
+#import "LNTouchConfig.h"
+#import "LNTouchImageFactory.h"
 
 static const NSTimeInterval TOUCH_VISUALIZER_WINDOW_REMOVE_DELAY = 0.2;
 static const NSTimeInterval TOUCH_VISUALIZER_PULSING_TIMER_DELAY = 0.6;
@@ -18,39 +18,61 @@ static const NSTimeInterval TOUCH_VISUALIZER_MORPH_DURATION = 0.4;
 static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 
 
-@interface COSTouchVisualizerWindow ()
+@interface LNTouchVisualizerWindow ()
 
-@property (nonatomic) UIWindow *overlayWindow;
-@property (nonatomic) UIViewController *overlayWindowViewController;
+@property (nonatomic, strong) UIWindow* overlayWindow;
 @property (nonatomic) BOOL fingerTipRemovalScheduled;
-@property (nonatomic) NSTimer *timer;
-@property (nonatomic) NSSet *allTouches;
+@property (nonatomic, strong) NSTimer* timer;
+@property (nonatomic, strong) NSSet* allTouches;
 
-@property (nonatomic) UIImage *touchImage;
-@property (nonatomic) UIImage *rippleImage;
-
-@property (nonatomic) COSTouchConfig *touchContactConfig;
-@property (nonatomic) COSTouchConfig *touchRippleConfig;
+@property (nonatomic, strong) UIImage* touchImage;
+@property (nonatomic, strong) UIImage* rippleImage;
 
 @end
 
-@implementation COSTouchVisualizerWindow
+@implementation LNTouchVisualizerWindow
 
 - (instancetype)initWithFrame:(CGRect)frame
-				 morphEnabled:(BOOL)morphEnabled
-			  touchVisibility:(COSTouchVisualizerWindowTouchVisibility)touchVisibility
-				contactConfig:(COSTouchConfig *)contactConfig
-				 rippleConfig:(COSTouchConfig *)rippleConfig
+{
+	return [self initWithFrame:frame morphEnabled:YES touchVisibility:LNTouchVisualizerWindowTouchVisibilityRemoteAndLocal contactConfig:nil rippleConfig:nil];
+}
+
+- (instancetype)initWithFrame:(CGRect)frame morphEnabled:(BOOL)morphEnabled touchVisibility:(LNTouchVisualizerWindowTouchVisibility)touchVisibility contactConfig:(LNTouchConfig *)contactConfig rippleConfig:(LNTouchConfig *)rippleConfig
 {
 	self = [super initWithFrame:frame];
 	if(self)
 	{
 		_morphEnabled = morphEnabled;
 		_touchVisibility = touchVisibility;
-		_touchContactConfig = contactConfig ?: [[COSTouchConfig alloc] initWithTouchConfigType:COSTouchConfigTpyeContact];
-		_touchRippleConfig = rippleConfig ?: [[COSTouchConfig alloc] initWithTouchConfigType:COSTouchConfigTpyeRipple];
+		_touchContactConfig = contactConfig ?: [[LNTouchConfig alloc] initWithTouchConfigType:LNTouchConfigTpyeContact];
+		_touchRippleConfig = rippleConfig ?: [[LNTouchConfig alloc] initWithTouchConfigType:LNTouchConfigTpyeRipple];
 	}
 	return self;
+}
+
+- (void)setTouchContactConfig:(LNTouchConfig *)touchContactConfig
+{
+	_touchContactConfig = touchContactConfig;
+	_touchImage = nil;
+}
+
+- (void)setTouchRippleConfig:(LNTouchConfig *)touchRippleConfig
+{
+	_touchRippleConfig = touchRippleConfig;
+	_rippleImage = nil;
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+{
+	[super traitCollectionDidChange:previousTraitCollection];
+	
+	if(self.traitCollection.userInterfaceStyle == previousTraitCollection.userInterfaceStyle)
+	{
+		return;
+	}
+	
+	_touchImage = nil;
+	_rippleImage = nil;
 }
 
 #pragma mark - Touch / Ripple and Images
@@ -59,7 +81,7 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 {
 	if(_touchImage == nil)
 	{
-		_touchImage = [COSTouchImageFactory imageWithTouchConfig:self.touchContactConfig];
+		_touchImage = [LNTouchImageFactory imageWithTouchConfig:self.touchContactConfig];
 	}
 	
 	return _touchImage;
@@ -69,7 +91,7 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 {
 	if(_rippleImage == nil)
 	{
-		_rippleImage = [COSTouchImageFactory imageWithTouchConfig:self.touchRippleConfig];
+		_rippleImage = [LNTouchImageFactory imageWithTouchConfig:self.touchRippleConfig];
 	}
 	
 	return _rippleImage;
@@ -102,12 +124,12 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 	
 	switch(self.touchVisibility)
 	{
-		case COSTouchVisualizerWindowTouchVisibilityNever:
+		case LNTouchVisualizerWindowTouchVisibilityNever:
 			return;
 			break;
 			
-		case COSTouchVisualizerWindowTouchVisibilityRemoteOnly:
-		case COSTouchVisualizerWindowTouchVisibilityRemoteAndLocal:
+		case LNTouchVisualizerWindowTouchVisibilityRemoteOnly:
+		case LNTouchVisualizerWindowTouchVisibilityRemoteAndLocal:
 		{
 			self.allTouches = event.allTouches;
 			
@@ -115,11 +137,15 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 			{
 				switch(touch.phase)
 				{
+					case UITouchPhaseRegionEntered:
+					case UITouchPhaseRegionMoved:
+					case UITouchPhaseRegionExited:
+						continue;
 					case UITouchPhaseBegan:
 					case UITouchPhaseMoved:
 					{
 						// Generate ripples
-						COSTouchImageView *rippleView = [[COSTouchImageView alloc] initWithImage:self.rippleImage];
+						LNTouchImageView *rippleView = [[LNTouchImageView alloc] initWithImage:self.rippleImage];
 						[self.overlayWindow addSubview:rippleView];
 						
 						rippleView.alpha = self.touchRippleConfig.alpha;
@@ -134,7 +160,7 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 					}
 					case UITouchPhaseStationary:
 					{
-						COSTouchImageView *touchView = (COSTouchImageView *)[self.overlayWindow viewWithTag:touch.hash];
+						LNTouchImageView *touchView = (LNTouchImageView *)[self.overlayWindow viewWithTag:touch.hash];
 						
 						if(touch.phase != UITouchPhaseStationary && touchView != nil && touchView.isFadingOut)
 						{
@@ -145,7 +171,7 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 						
 						if(touchView == nil && touch.phase != UITouchPhaseStationary)
 						{
-							touchView = [[COSTouchImageView alloc] initWithImage:self.touchImage];
+							touchView = [[LNTouchImageView alloc] initWithImage:self.touchImage];
 							[self.overlayWindow addSubview:touchView];
 							
 							if(self.morphEnabled)
@@ -184,16 +210,18 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 }
 
 
-- (UIWindow *)overlayWindow
+- (UIWindow*)overlayWindow
 {
-	if(!_overlayWindow)
+	if(_overlayWindow == nil)
 	{
-		_overlayWindow = [[COSOverlayVisualizerWindow alloc] initWithFrame:self.frame];
+		_overlayWindow = [[LNOverlayVisualizerWindow alloc] initWithFrame:self.frame];
 		_overlayWindow.userInteractionEnabled = NO;
 		_overlayWindow.windowLevel = UIWindowLevelStatusBar;
 		_overlayWindow.backgroundColor = UIColor.clearColor;
 		_overlayWindow.hidden = NO;
+		_overlayWindow.windowScene = self.windowScene;
 	}
+	
 	return _overlayWindow;
 }
 #pragma mark - Private
@@ -215,9 +243,9 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 	
 	NSTimeInterval now = NSProcessInfo.processInfo.systemUptime;
 	
-	for(COSTouchImageView *touchView in self.overlayWindow.subviews)
+	for(LNTouchImageView *touchView in self.overlayWindow.subviews)
 	{
-		if(![touchView isKindOfClass:COSTouchImageView.class])
+		if([touchView isKindOfClass:LNTouchImageView.class] == NO)
 		{
 			continue;
 		}
@@ -228,7 +256,7 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 		}
 	}
 	
-	if([[self.overlayWindow subviews] count])
+	if(self.overlayWindow.subviews.count > 0)
 	{
 		[self _scheduleFingerTipRemoval];
 	}
@@ -236,7 +264,7 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 
 - (void)_removeFingerTipWithHash:(NSUInteger)hash animated:(BOOL)animated
 {
-	COSTouchImageView *touchView = (COSTouchImageView *)[self.overlayWindow viewWithTag:hash];
+	LNTouchImageView *touchView = (LNTouchImageView *)[self.overlayWindow viewWithTag:hash];
 	if(touchView == nil || touchView.isFadingOut)
 	{
 		return;
@@ -244,23 +272,23 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 	
 	BOOL animationsWereEnabled = [UIView areAnimationsEnabled];
 	
+	dispatch_block_t animations = ^ {
+		touchView.frame = CGRectMake(touchView.center.x - touchView.frame.size.width,
+									 touchView.center.y - touchView.frame.size.height,
+									 touchView.frame.size.width * 2, touchView.frame.size.height * 2);
+		
+		touchView.alpha = 0.0;
+	};
+	
 	if(animated)
 	{
 		[UIView setAnimationsEnabled:YES];
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationDuration:self.touchContactConfig.fadeDuration];
-	}
-	
-	touchView.frame = CGRectMake(touchView.center.x - touchView.frame.size.width,
-								 touchView.center.y - touchView.frame.size.height,
-								 touchView.frame.size.width * 2, touchView.frame.size.height * 2);
-	
-	touchView.alpha = 0.0;
-	
-	if(animated)
-	{
-		[UIView commitAnimations];
+		[UIView animateWithDuration:self.touchContactConfig.fadeDuration animations:animations];
 		[UIView setAnimationsEnabled:animationsWereEnabled];
+	}
+	else
+	{
+		animations();
 	}
 	
 	touchView.fadingOut = YES;

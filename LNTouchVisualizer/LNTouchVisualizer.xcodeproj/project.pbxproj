@@ -7,31 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39843F19260BA06D004CCF55 /* LNOverlayVisualizerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 39843F17260BA06D004CCF55 /* LNOverlayVisualizerWindow.m */; };
+		39843F1A260BA06D004CCF55 /* LNOverlayVisualizerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 39843F18260BA06D004CCF55 /* LNOverlayVisualizerWindow.h */; };
 		39C3806E260B783E00ACF910 /* LNTouchVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C3806C260B783E00ACF910 /* LNTouchVisualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		39C3807A260B789200ACF910 /* COSOverlayVisualizerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C38078260B789200ACF910 /* COSOverlayVisualizerWindow.m */; };
-		39C3807B260B789200ACF910 /* COSOverlayVisualizerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C38079260B789200ACF910 /* COSOverlayVisualizerWindow.h */; };
-		39C3807E260B78A500ACF910 /* COSTouchVisualizerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C3807C260B78A500ACF910 /* COSTouchVisualizerWindow.h */; };
-		39C3807F260B78A500ACF910 /* COSTouchVisualizerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C3807D260B78A500ACF910 /* COSTouchVisualizerWindow.m */; };
-		39C38082260B78B200ACF910 /* COSTouchImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C38080260B78B200ACF910 /* COSTouchImageView.h */; };
-		39C38083260B78B200ACF910 /* COSTouchImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C38081260B78B200ACF910 /* COSTouchImageView.m */; };
-		39C38086260B78BA00ACF910 /* COSTouchConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C38084260B78BA00ACF910 /* COSTouchConfig.m */; };
-		39C38087260B78BA00ACF910 /* COSTouchConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C38085260B78BA00ACF910 /* COSTouchConfig.h */; };
-		39C38089260B78C400ACF910 /* COSTouchConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C38088260B78C400ACF910 /* COSTouchConfig.m */; };
+		39C3807E260B78A500ACF910 /* LNTouchVisualizerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C3807C260B78A500ACF910 /* LNTouchVisualizerWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39C3807F260B78A500ACF910 /* LNTouchVisualizerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.m */; };
+		39C38082260B78B200ACF910 /* LNTouchImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C38080260B78B200ACF910 /* LNTouchImageView.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		39C38083260B78B200ACF910 /* LNTouchImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C38081260B78B200ACF910 /* LNTouchImageView.m */; };
+		39C38086260B78BA00ACF910 /* LNTouchConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C38084260B78BA00ACF910 /* LNTouchConfig.m */; };
+		39C38087260B78BA00ACF910 /* LNTouchConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C38085260B78BA00ACF910 /* LNTouchConfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39C3808C260B91A700ACF910 /* LNTouchImageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C3808A260B91A700ACF910 /* LNTouchImageFactory.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		39C3808D260B91A700ACF910 /* LNTouchImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C3808B260B91A700ACF910 /* LNTouchImageFactory.m */; };
+		39C380BD260B944C00ACF910 /* UIWindowScene+TouchVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C380BB260B944C00ACF910 /* UIWindowScene+TouchVisualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39C380BE260B944C00ACF910 /* UIWindowScene+TouchVisualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C380BC260B944C00ACF910 /* UIWindowScene+TouchVisualizer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		39843F17260BA06D004CCF55 /* LNOverlayVisualizerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNOverlayVisualizerWindow.m; sourceTree = "<group>"; };
+		39843F18260BA06D004CCF55 /* LNOverlayVisualizerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNOverlayVisualizerWindow.h; sourceTree = "<group>"; };
 		39C38069260B783E00ACF910 /* LNTouchVisualizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LNTouchVisualizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		39C3806C260B783E00ACF910 /* LNTouchVisualizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LNTouchVisualizer.h; sourceTree = "<group>"; };
 		39C3806D260B783E00ACF910 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		39C38078260B789200ACF910 /* COSOverlayVisualizerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COSOverlayVisualizerWindow.m; sourceTree = "<group>"; };
-		39C38079260B789200ACF910 /* COSOverlayVisualizerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COSOverlayVisualizerWindow.h; sourceTree = "<group>"; };
-		39C3807C260B78A500ACF910 /* COSTouchVisualizerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COSTouchVisualizerWindow.h; sourceTree = "<group>"; };
-		39C3807D260B78A500ACF910 /* COSTouchVisualizerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COSTouchVisualizerWindow.m; sourceTree = "<group>"; };
-		39C38080260B78B200ACF910 /* COSTouchImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COSTouchImageView.h; sourceTree = "<group>"; };
-		39C38081260B78B200ACF910 /* COSTouchImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COSTouchImageView.m; sourceTree = "<group>"; };
-		39C38084260B78BA00ACF910 /* COSTouchConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COSTouchConfig.m; sourceTree = "<group>"; };
-		39C38085260B78BA00ACF910 /* COSTouchConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = COSTouchConfig.h; sourceTree = "<group>"; };
-		39C38088260B78C400ACF910 /* COSTouchConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = COSTouchConfig.m; sourceTree = "<group>"; };
+		39C3807C260B78A500ACF910 /* LNTouchVisualizerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTouchVisualizerWindow.h; sourceTree = "<group>"; };
+		39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTouchVisualizerWindow.m; sourceTree = "<group>"; };
+		39C38080260B78B200ACF910 /* LNTouchImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTouchImageView.h; sourceTree = "<group>"; };
+		39C38081260B78B200ACF910 /* LNTouchImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTouchImageView.m; sourceTree = "<group>"; };
+		39C38084260B78BA00ACF910 /* LNTouchConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTouchConfig.m; sourceTree = "<group>"; };
+		39C38085260B78BA00ACF910 /* LNTouchConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTouchConfig.h; sourceTree = "<group>"; };
+		39C3808A260B91A700ACF910 /* LNTouchImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTouchImageFactory.h; sourceTree = "<group>"; };
+		39C3808B260B91A700ACF910 /* LNTouchImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTouchImageFactory.m; sourceTree = "<group>"; };
+		39C380BB260B944C00ACF910 /* UIWindowScene+TouchVisualizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIWindowScene+TouchVisualizer.h"; sourceTree = "<group>"; };
+		39C380BC260B944C00ACF910 /* UIWindowScene+TouchVisualizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIWindowScene+TouchVisualizer.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,19 +70,30 @@
 		39C3806B260B783E00ACF910 /* LNTouchVisualizer */ = {
 			isa = PBXGroup;
 			children = (
+				39C380BA260B942600ACF910 /* Private */,
 				39C3806C260B783E00ACF910 /* LNTouchVisualizer.h */,
-				39C3807C260B78A500ACF910 /* COSTouchVisualizerWindow.h */,
-				39C3807D260B78A500ACF910 /* COSTouchVisualizerWindow.m */,
-				39C38079260B789200ACF910 /* COSOverlayVisualizerWindow.h */,
-				39C38078260B789200ACF910 /* COSOverlayVisualizerWindow.m */,
-				39C38080260B78B200ACF910 /* COSTouchImageView.h */,
-				39C38081260B78B200ACF910 /* COSTouchImageView.m */,
-				39C38085260B78BA00ACF910 /* COSTouchConfig.h */,
-				39C38084260B78BA00ACF910 /* COSTouchConfig.m */,
-				39C38088260B78C400ACF910 /* COSTouchConfig.m */,
+				39C38085260B78BA00ACF910 /* LNTouchConfig.h */,
+				39C3807C260B78A500ACF910 /* LNTouchVisualizerWindow.h */,
+				39C380BB260B944C00ACF910 /* UIWindowScene+TouchVisualizer.h */,
 				39C3806D260B783E00ACF910 /* Info.plist */,
 			);
 			path = LNTouchVisualizer;
+			sourceTree = "<group>";
+		};
+		39C380BA260B942600ACF910 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.m */,
+				39843F18260BA06D004CCF55 /* LNOverlayVisualizerWindow.h */,
+				39843F17260BA06D004CCF55 /* LNOverlayVisualizerWindow.m */,
+				39C38080260B78B200ACF910 /* LNTouchImageView.h */,
+				39C38081260B78B200ACF910 /* LNTouchImageView.m */,
+				39C3808A260B91A700ACF910 /* LNTouchImageFactory.h */,
+				39C3808B260B91A700ACF910 /* LNTouchImageFactory.m */,
+				39C38084260B78BA00ACF910 /* LNTouchConfig.m */,
+				39C380BC260B944C00ACF910 /* UIWindowScene+TouchVisualizer.m */,
+			);
+			path = Private;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -87,10 +104,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				39C3806E260B783E00ACF910 /* LNTouchVisualizer.h in Headers */,
-				39C3807B260B789200ACF910 /* COSOverlayVisualizerWindow.h in Headers */,
-				39C3807E260B78A500ACF910 /* COSTouchVisualizerWindow.h in Headers */,
-				39C38087260B78BA00ACF910 /* COSTouchConfig.h in Headers */,
-				39C38082260B78B200ACF910 /* COSTouchImageView.h in Headers */,
+				39C3808C260B91A700ACF910 /* LNTouchImageFactory.h in Headers */,
+				39843F1A260BA06D004CCF55 /* LNOverlayVisualizerWindow.h in Headers */,
+				39C380BD260B944C00ACF910 /* UIWindowScene+TouchVisualizer.h in Headers */,
+				39C3807E260B78A500ACF910 /* LNTouchVisualizerWindow.h in Headers */,
+				39C38087260B78BA00ACF910 /* LNTouchConfig.h in Headers */,
+				39C38082260B78B200ACF910 /* LNTouchImageView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,11 +180,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39C3807A260B789200ACF910 /* COSOverlayVisualizerWindow.m in Sources */,
-				39C38086260B78BA00ACF910 /* COSTouchConfig.m in Sources */,
-				39C38083260B78B200ACF910 /* COSTouchImageView.m in Sources */,
-				39C38089260B78C400ACF910 /* COSTouchConfig.m in Sources */,
-				39C3807F260B78A500ACF910 /* COSTouchVisualizerWindow.m in Sources */,
+				39843F19260BA06D004CCF55 /* LNOverlayVisualizerWindow.m in Sources */,
+				39C380BE260B944C00ACF910 /* UIWindowScene+TouchVisualizer.m in Sources */,
+				39C3808D260B91A700ACF910 /* LNTouchImageFactory.m in Sources */,
+				39C38086260B78BA00ACF910 /* LNTouchConfig.m in Sources */,
+				39C38083260B78B200ACF910 /* LNTouchImageView.m in Sources */,
+				39C3807F260B78A500ACF910 /* LNTouchVisualizerWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

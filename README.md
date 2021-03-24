@@ -1,4 +1,4 @@
-# COSTouchVisualizer
+# LNTouchVisualizer
 
 ![COSTouchVisualizer](https://raw.githubusercontent.com/conopsys/COSTouchVisualizer/master/touchvisdemo.gif "COSTouchVisualizer iOS")
 
