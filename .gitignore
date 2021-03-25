@@ -122,3 +122,4 @@ iOSInjectionProject/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.gitignore.io/api/macos,swift,xcode
+/_tmp_release_notes.md
