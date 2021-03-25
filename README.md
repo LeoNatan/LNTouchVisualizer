@@ -69,8 +69,8 @@ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options conn
 	guard let scene = (scene as? UIWindowScene) else { return }
 	scene.touchVisualizerEnabled = true
  
-  //This is to configure the system touch visualizer window.
-  let rippleConfig = LNTouchConfig.ripple
+	//This is to configure the system touch visualizer window.
+	let rippleConfig = LNTouchConfig.ripple
 	rippleConfig.fillColor = .systemRed
 	scene.touchVisualizerWindow.touchRippleConfig = rippleConfig
 }
