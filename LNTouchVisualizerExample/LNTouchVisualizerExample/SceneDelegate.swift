@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let scene = (scene as? UIWindowScene) else { return }
 		scene.touchVisualizerEnabled = true
 		
-		let rippleConfig = LNTouchConfig(touchConfigType: .ripple)
+		let rippleConfig = LNTouchConfig.ripple
 		rippleConfig.fillColor = .systemRed
 		scene.touchVisualizerWindow.touchRippleConfig = rippleConfig
 	}

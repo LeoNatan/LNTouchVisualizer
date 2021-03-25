@@ -34,16 +34,16 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame morphEnabled:YES touchVisibility:LNTouchVisualizerWindowTouchVisibilityRemoteAndLocal contactConfig:nil rippleConfig:nil];
+	return [self initWithFrame:frame touchVisualizationEnabled:YES morphEnabled:YES contactConfig:nil rippleConfig:nil];
 }
 
-- (instancetype)initWithFrame:(CGRect)frame morphEnabled:(BOOL)morphEnabled touchVisibility:(LNTouchVisualizerWindowTouchVisibility)touchVisibility contactConfig:(LNTouchConfig *)contactConfig rippleConfig:(LNTouchConfig *)rippleConfig
+- (instancetype)initWithFrame:(CGRect)frame touchVisualizationEnabled:(BOOL)touchVisualizationEnabled morphEnabled:(BOOL)morphEnabled contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig
 {
 	self = [super initWithFrame:frame];
 	if(self)
 	{
 		_morphEnabled = morphEnabled;
-		_touchVisibility = touchVisibility;
+		_touchVisualizationEnabled = touchVisualizationEnabled;
 		_touchContactConfig = contactConfig ?: [LNTouchConfig touchConfig];
 		_touchRippleConfig = rippleConfig ?: [LNTouchConfig rippleConfig];
 	}
@@ -122,87 +122,81 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 {
 	[super sendEvent:event];
 	
-	switch(self.touchVisibility)
+	if(self.touchVisualizationEnabled == NO)
 	{
-		case LNTouchVisualizerWindowTouchVisibilityNever:
-			return;
-			break;
-			
-		case LNTouchVisualizerWindowTouchVisibilityRemoteOnly:
-		case LNTouchVisualizerWindowTouchVisibilityRemoteAndLocal:
+		return;
+		
+	}
+	
+	self.allTouches = event.allTouches;
+	
+	for(UITouch *touch in self.allTouches.allObjects)
+	{
+		switch(touch.phase)
 		{
-			self.allTouches = event.allTouches;
-			
-			for(UITouch *touch in self.allTouches.allObjects)
+			case UITouchPhaseRegionEntered:
+			case UITouchPhaseRegionMoved:
+			case UITouchPhaseRegionExited:
+				continue;
+			case UITouchPhaseBegan:
+			case UITouchPhaseMoved:
 			{
-				switch(touch.phase)
+				// Generate ripples
+				LNTouchImageView *rippleView = [[LNTouchImageView alloc] initWithImage:self.rippleImage];
+				[self.overlayWindow addSubview:rippleView];
+				
+				rippleView.alpha = self.touchRippleConfig.alpha;
+				rippleView.center = [touch locationInView:self.overlayWindow];
+				
+				[UIView animateWithDuration:self.touchRippleConfig.fadeDuration delay:TOUCH_VISUALIZER_ZERO_DELAY options:UIViewAnimationOptionCurveEaseIn animations:^{
+					[rippleView setAlpha:0.0];
+					[rippleView setFrame:CGRectInset(rippleView.frame, 24, 24)];
+				} completion:^(BOOL finished) {
+					[rippleView removeFromSuperview];
+				}];
+			}
+			case UITouchPhaseStationary:
+			{
+				LNTouchImageView *touchView = (LNTouchImageView *)[self.overlayWindow viewWithTag:touch.hash];
+				
+				if(touch.phase != UITouchPhaseStationary && touchView != nil && touchView.isFadingOut)
 				{
-					case UITouchPhaseRegionEntered:
-					case UITouchPhaseRegionMoved:
-					case UITouchPhaseRegionExited:
-						continue;
-					case UITouchPhaseBegan:
-					case UITouchPhaseMoved:
+					[self.timer invalidate];
+					[touchView removeFromSuperview];
+					touchView = nil;
+				}
+				
+				if(touchView == nil && touch.phase != UITouchPhaseStationary)
+				{
+					touchView = [[LNTouchImageView alloc] initWithImage:self.touchImage];
+					[self.overlayWindow addSubview:touchView];
+					
+					if(self.morphEnabled)
 					{
-						// Generate ripples
-						LNTouchImageView *rippleView = [[LNTouchImageView alloc] initWithImage:self.rippleImage];
-						[self.overlayWindow addSubview:rippleView];
-						
-						rippleView.alpha = self.touchRippleConfig.alpha;
-						rippleView.center = [touch locationInView:self.overlayWindow];
-						
-						[UIView animateWithDuration:self.touchRippleConfig.fadeDuration delay:TOUCH_VISUALIZER_ZERO_DELAY options:UIViewAnimationOptionCurveEaseIn animations:^{
-							[rippleView setAlpha:0.0];
-							[rippleView setFrame:CGRectInset(rippleView.frame, 24, 24)];
-						} completion:^(BOOL finished) {
-							[rippleView removeFromSuperview];
-						}];
-					}
-					case UITouchPhaseStationary:
-					{
-						LNTouchImageView *touchView = (LNTouchImageView *)[self.overlayWindow viewWithTag:touch.hash];
-						
-						if(touch.phase != UITouchPhaseStationary && touchView != nil && touchView.isFadingOut)
+						if(self.timer)
 						{
 							[self.timer invalidate];
-							[touchView removeFromSuperview];
-							touchView = nil;
 						}
 						
-						if(touchView == nil && touch.phase != UITouchPhaseStationary)
-						{
-							touchView = [[LNTouchImageView alloc] initWithImage:self.touchImage];
-							[self.overlayWindow addSubview:touchView];
-							
-							if(self.morphEnabled)
-							{
-								if(self.timer)
-								{
-									[self.timer invalidate];
-								}
-								
-								self.timer = [NSTimer scheduledTimerWithTimeInterval:TOUCH_VISUALIZER_PULSING_TIMER_DELAY target:self selector:@selector(performMorphWithTouchView:) userInfo:touchView repeats:YES];
-							}
-						}
-						if(!touchView.isFadingOut)
-						{
-							touchView.alpha = self.touchContactConfig.alpha;
-							touchView.center = [touch locationInView:self.overlayWindow];
-							touchView.tag = touch.hash;
-							touchView.timestamp = touch.timestamp;
-							touchView.shouldAutomaticallyRemoveAfterTimeout = [self shouldAutomaticallyRemoveFingerTipForTouch:touch];
-						}
-						break;
-					}
-					case UITouchPhaseEnded:
-					case UITouchPhaseCancelled:
-					{
-						[self _removeFingerTipWithHash:touch.hash animated:YES];
-						break;
+						self.timer = [NSTimer scheduledTimerWithTimeInterval:TOUCH_VISUALIZER_PULSING_TIMER_DELAY target:self selector:@selector(performMorphWithTouchView:) userInfo:touchView repeats:YES];
 					}
 				}
+				if(!touchView.isFadingOut)
+				{
+					touchView.alpha = self.touchContactConfig.alpha;
+					touchView.center = [touch locationInView:self.overlayWindow];
+					touchView.tag = touch.hash;
+					touchView.timestamp = touch.timestamp;
+					touchView.shouldAutomaticallyRemoveAfterTimeout = [self shouldAutomaticallyRemoveFingerTipForTouch:touch];
+				}
+				break;
 			}
-			break;
+			case UITouchPhaseEnded:
+			case UITouchPhaseCancelled:
+			{
+				[self _removeFingerTipWithHash:touch.hash animated:YES];
+				break;
+			}
 		}
 	}
 	

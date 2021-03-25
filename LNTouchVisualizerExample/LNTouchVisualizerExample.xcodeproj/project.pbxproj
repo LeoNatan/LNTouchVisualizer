@@ -7,17 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		398C2905260CD266000690FB /* LNTouchVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39C380B3260B93A800ACF910 /* LNTouchVisualizer.framework */; };
+		398C2906260CD266000690FB /* LNTouchVisualizer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 39C380B3260B93A800ACF910 /* LNTouchVisualizer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		39C3809B260B92FA00ACF910 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C3809A260B92FA00ACF910 /* AppDelegate.swift */; };
 		39C3809D260B92FA00ACF910 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C3809C260B92FA00ACF910 /* SceneDelegate.swift */; };
 		39C3809F260B92FA00ACF910 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C3809E260B92FA00ACF910 /* ViewController.swift */; };
 		39C380A2260B92FA00ACF910 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39C380A0260B92FA00ACF910 /* Main.storyboard */; };
 		39C380A4260B92FC00ACF910 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39C380A3260B92FC00ACF910 /* Assets.xcassets */; };
 		39C380A7260B92FC00ACF910 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39C380A5260B92FC00ACF910 /* LaunchScreen.storyboard */; };
-		39C380B5260B93AF00ACF910 /* LNTouchVisualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39C380B3260B93A800ACF910 /* LNTouchVisualizer.framework */; };
-		39C380B6260B93AF00ACF910 /* LNTouchVisualizer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 39C380B3260B93A800ACF910 /* LNTouchVisualizer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		398C2908260CD26B000690FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 39C380AE260B93A800ACF910 /* LNTouchVisualizer.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 39C38068260B783E00ACF910;
+			remoteInfo = LNTouchVisualizer;
+		};
 		39C380B2260B93A800ACF910 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 39C380AE260B93A800ACF910 /* LNTouchVisualizer.xcodeproj */;
@@ -25,23 +32,16 @@
 			remoteGlobalIDString = 39C38069260B783E00ACF910;
 			remoteInfo = LNTouchVisualizer;
 		};
-		39C380B8260B93B400ACF910 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 39C380AE260B93A800ACF910 /* LNTouchVisualizer.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 39C38068260B783E00ACF910;
-			remoteInfo = LNTouchVisualizer;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		39C380B7260B93AF00ACF910 /* Embed Frameworks */ = {
+		398C2907260CD266000690FB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				39C380B6260B93AF00ACF910 /* LNTouchVisualizer.framework in Embed Frameworks */,
+				398C2906260CD266000690FB /* LNTouchVisualizer.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,7 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39C380B5260B93AF00ACF910 /* LNTouchVisualizer.framework in Frameworks */,
+				398C2905260CD266000690FB /* LNTouchVisualizer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,12 +129,12 @@
 				39C38093260B92FA00ACF910 /* Sources */,
 				39C38094260B92FA00ACF910 /* Frameworks */,
 				39C38095260B92FA00ACF910 /* Resources */,
-				39C380B7260B93AF00ACF910 /* Embed Frameworks */,
+				398C2907260CD266000690FB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				39C380B9260B93B400ACF910 /* PBXTargetDependency */,
+				398C2909260CD26B000690FB /* PBXTargetDependency */,
 			);
 			name = LNTouchVisualizerExample;
 			productName = LNTouchVisualizerExample;
@@ -216,10 +216,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		39C380B9260B93B400ACF910 /* PBXTargetDependency */ = {
+		398C2909260CD26B000690FB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = LNTouchVisualizer;
-			targetProxy = 39C380B8260B93B400ACF910 /* PBXContainerItemProxy */;
+			targetProxy = 398C2908260CD26B000690FB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

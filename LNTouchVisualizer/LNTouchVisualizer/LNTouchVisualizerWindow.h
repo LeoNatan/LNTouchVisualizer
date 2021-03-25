@@ -10,21 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSUInteger, LNTouchVisualizerWindowTouchVisibility)
-{
-    LNTouchVisualizerWindowTouchVisibilityNever,
-    LNTouchVisualizerWindowTouchVisibilityRemoteOnly,
-    LNTouchVisualizerWindowTouchVisibilityRemoteAndLocal,
-};
-
 @interface LNTouchVisualizerWindow : UIWindow
 
+@property (nonatomic, getter=isTouchVisualizationEnabled) BOOL touchVisualizationEnabled;
 @property (nonatomic, getter=isMorphEnabled) BOOL morphEnabled;
+
 @property (nonatomic, strong) LNTouchConfig* touchContactConfig;
 @property (nonatomic, strong) LNTouchConfig* touchRippleConfig;
-@property (nonatomic) LNTouchVisualizerWindowTouchVisibility touchVisibility;
 
-- (instancetype)initWithFrame:(CGRect)frame morphEnabled:(BOOL)morphEnabled touchVisibility:(LNTouchVisualizerWindowTouchVisibility)touchVisibility contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFrame:(CGRect)frame touchVisualizationEnabled:(BOOL)touchVisualizationEnabled morphEnabled:(BOOL)morphEnabled contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig NS_DESIGNATED_INITIALIZER;
 
 @end
 

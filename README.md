@@ -1,138 +1,84 @@
 # LNTouchVisualizer
 
-![COSTouchVisualizer](https://raw.githubusercontent.com/conopsys/COSTouchVisualizer/master/touchvisdemo.gif "COSTouchVisualizer iOS")
+Touch visualizing framework for iOS.
 
-[![Version](http://cocoapod-badges.herokuapp.com/v/COSTouchVisualizer/badge.png)](http://cocoadocs.org/docsets/COSTouchVisualizer)
-[![Platform](http://cocoapod-badges.herokuapp.com/p/COSTouchVisualizer/badge.png)](http://cocoadocs.org/docsets/COSTouchVisualizer)
+[![GitHub release](https://img.shields.io/github/release/LeoNatan/LNTouchVisualizer.svg)](https://github.com/LeoNatan/LNTouchVisualizer/releases) [![GitHub stars](https://img.shields.io/github/stars/LeoNatan/LNTouchVisualizer.svg)](https://github.com/LeoNatan/LNTouchVisualizer/stargazers) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/LeoNatan/LNTouchVisualizer/master/LICENSE) <span class="badge-paypal"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BR68NJEJXGWL6" title="Donate to this project using PayPal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg?style=flat" alt="PayPal Donation Button" /></a></span>
 
-## Swift Usage
+[![GitHub issues](https://img.shields.io/github/issues-raw/LeoNatan/LNTouchVisualizer.svg)](https://github.com/LeoNatan/LNTouchVisualizer/issues) [![GitHub contributors](https://img.shields.io/github/contributors/LeoNatan/LNPopupController.svg)](https://github.com/LeoNatan/LNTouchVisualizer/graphs/contributors) ![](https://img.shields.io/badge/swift%20package%20manager-compatible-green)
 
-Using COSTouchVisualizer is possible with Swift.  Inside your AppDelegate, redefine your window and declare a visualizer window with storyboards.
+<p align="center"><img src="Supplements/touchvis.gif" width="360"/></p>
 
-**With Storyboards**
+
+
+## Adding to Your Project
+
+### Swift Package Manager
+
+Swift Package Manager is the recommended way to integrate LNTouchVisualizer in your project.
+
+LNTouchVisualizer supports SPM versions 5.1.0 and above. To use SPM, you should use Xcode 11 to open your project. Click `File` -> `Swift Packages` -> `Add Package Dependency`, enter `https://github.com/LeoNatan/LNTouchVisualizer`. Select the version you’d like to use.
+
+You can also manually add the package to your Package.swift file:
+
 ```swift
-class AppDelegate: UIResponder, UIApplicationDelegate, COSTouchVisualizerWindowDelegate {
-
-  lazy var window: UIWindow? = {
-      var customWindow = COSTouchVisualizerWindow(frame: UIScreen.mainScreen().bounds)
-      customWindow.touchVisualizerWindowDelegate = self
-      return customWindow
-      }()
-...
-}
-```
-**Without Storyboards**
-
-## Objective-C Usage
-
-To run the example project; clone the repo, and run `pod update` from the Example directory first.  By default, this project has `Debug Mode` disabled.  If you want to see the gestures while you're testing, follow the **Debugging Mode** instructions.
-
-**With Storyboards**
- in your `AppDelegate` implementation simply add the following getter
-
-```objective-c
-#import <COSTouchVisualizerWindow.h>
-
-...
-
-// Add this method to your AppDelegate method
-- (COSTouchVisualizerWindow *)window {
-    static COSTouchVisualizerWindow *visWindow = nil;
-    if (!visWindow) visWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    return visWindow;
-}
+.package(url: "https://github.com/LeoNatan/LNTouchVisualizer.git", from: "1.0")
 ```
 
-**Without Storyboards**
-```objective-c
-#import <COSTouchVisualizerWindow.h>
+And the dependency in your target:
 
-...
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Setup window
-    self.window = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.backgroundColor = [UIColor whiteColor];
-
-    ...
-
-}
+```swift
+.target(name: "BestExampleApp", dependencies: ["LNTouchVisualizer"]),
 ```
 
-**Delegate**
+### Carthage
 
-To make the window change active status dynamically or to enable debugging mode, you could make an object
-implements the ```COSTouchVisualizerWindowDelegate``` protocol.
+Add the following to your Cartfile:
 
-Here are 2 optional methods in this delegate protocol:
-```objective-c
-- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow *)window;
-- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window;
+```github "LeoNatan/LNTouchVisualizer"```
+
+Make sure you follow the Carthage integration instructions [here](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
+
+### Manual
+
+Drag the `LNTouchVisualizer.xcodeproj` project to your project, and add `LNTouchVisualizer.framework` to **Embedded Binaries** in your project target's **General** tab. Xcode should sort everything else on its own.
+
+### CocoaPods
+
+CocoaPods is not supported. There are many reasons for this. Instead of CocoaPods, use Carthage. You can continue using CocoaPods for for your other dependencies and Swift Package Manager for `LNTouchVisualizer`.
+
+## Using the Framework
+
+### Swift
+
+While the framework is written in Objective C, it uses modern Objective C syntax, so using the framework in Swift is very easy and intuitive.
+
+### Project Integration
+
+Import the module in your project:
+
+```swift
+import LNTouchVisualizer
 ```
 
-By default, the window only shows fingertip when there is a mirrored window.
+### Touch Visualization
 
-The first delegate method (```-touchVisualizerWindowShouldShowFingertip:```) tells the window to enable
-fingertip or not. You should return ```YES``` to enable the fingertip feature, or ```NO``` if you want to close this
-feature.
+The easiest way to enable touch visualization for your window scene is to add the following code in your scene delegate:
 
-The second method (```-touchVisualizerWindowShouldAlwaysShowFingertip:```) tells the window to always show the
-fingertip even if there's no any mirrored screens (when returning YES). If this method returns NO, the window
-only show fingertip when connected to a mirrored screen.
-
-```objective-c
-- (COSTouchVisualizerWindow *)window {
-  if (!_customWindow) {
-    _customWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    // ... other setup code
-
-    _customWindow.touchVisualizerWindowDelegate = self;
-  }
-  return _customWindow;
-}
-
-- (BOOL)touchVisualizerWindowShouldAlwaysShowFingertip:(COSTouchVisualizerWindow *)window {
-    return YES;  // Return YES to make the fingertip always display even if there's no any mirrored screen.
-                 // Return NO or don't implement this method if you want to keep the fingertip display only when
-                 // the device is connected to a mirrored screen.
-}
-
-- (BOOL)touchVisualizerWindowShouldShowFingertip:(COSTouchVisualizerWindow *)window {
-    return YES;  // Return YES or don't implement this method to make this window show fingertip when necessary.
-                 // Return NO to make this window not to show fingertip.
+```swift
+func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+	guard let scene = (scene as? UIWindowScene) else { return }
+	scene.touchVisualizerEnabled = true
+ 
+  //This is to configure the system touch visualizer window.
+  let rippleConfig = LNTouchConfig.ripple
+	rippleConfig.fillColor = .systemRed
+	scene.touchVisualizerWindow.touchRippleConfig = rippleConfig
 }
 ```
 
-**Customization**
+This will enable touch visualization for your entire scene by adding a passthrough window for touch visualizations, while allowing you to use your own windows for your app’s UI.
 
-```objective-c
-// Add these lines after the windows is initialized
-// Touch Color
-[visWindow setFillColor:[UIColor yellowColor]];
-[visWindow setStrokeColor:[UIColor purpleColor]];
-[visWindow setTouchAlpha:0.4];
-// Ripple Color
-[visWindow setRippleFillColor:[UIColor yellowColor]];
-[visWindow setRippleStrokeColor:[UIColor purpleColor]];
-[visWindow setRippleAlpha:0.1];
-```
+If you’d like to use a touch visualization window on your own, check out the `LNTouchVisualizerWindow.h` header for more information.
 
-## Requirements
 
-This project requires ARC.
 
-## Installation
-
-COSTouchVisualizer is available through [CocoaPods](http://cocoapods.org), to install
-it simply add the following line to your Podfile:
-
-    pod "COSTouchVisualizer"
-
-## Author
-
-Joe Blau, josephblau@gmail.com
-
-## License
-
-COSTouchVisualizer is available under the MIT license. See the LICENSE file for more info.
