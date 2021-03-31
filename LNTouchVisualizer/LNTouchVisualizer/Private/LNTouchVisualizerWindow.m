@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 conopsys. All rights reserved.
 //
 
-#import "LNTouchVisualizerWindow.h"
+#import <LNTouchVisualizer/LNTouchVisualizerWindow.h>
 #import "LNOverlayVisualizerWindow.h"
 #import "LNTouchImageView.h"
-#import "LNTouchConfig.h"
+#import <LNTouchVisualizer/LNTouchConfig.h>
 #import "LNTouchImageFactory.h"
 
 static const NSTimeInterval TOUCH_VISUALIZER_WINDOW_REMOVE_DELAY = 0.2;

@@ -5,8 +5,7 @@ import PackageDescription
 let package = Package(
 	name: "LNTouchVisualizer",
 	platforms: [
-		.iOS(.v12),
-		.macOS(.v10_15)
+		.iOS(.v13)
 	],
 	products: [
 		.library(

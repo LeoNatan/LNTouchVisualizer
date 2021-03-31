@@ -6,7 +6,7 @@
 //  Copyright © 2017 conopsys. All rights reserved.
 //
 
-#import "LNTouchConfig.h"
+#import <LNTouchVisualizer/LNTouchConfig.h>
 
 static const CGFloat LNTouchConfigContactAlpha = 0.5;
 static const CGFloat LNTouchConfigRippleAlpha = 0.2;

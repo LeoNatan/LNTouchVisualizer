@@ -7,7 +7,7 @@
 //
 
 #import "LNTouchImageFactory.h"
-#import "LNTouchConfig.h"
+#import <LNTouchVisualizer/LNTouchConfig.h>
 
 static const CGFloat LNTouchImageFactorySideSize = 50.0;
 

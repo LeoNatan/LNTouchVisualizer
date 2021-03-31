@@ -5,7 +5,7 @@
 //  Created by Leo Natan on 3/24/21.
 //
 
-#import "UIWindowScene+TouchVisualizer.h"
+#import <LNTouchVisualizer/UIWindowScene+TouchVisualizer.h>
 #import <LNTouchVisualizer/LNTouchVisualizerWindow.h>
 
 @import ObjectiveC;
