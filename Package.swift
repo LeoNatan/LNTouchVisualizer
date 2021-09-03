@@ -24,8 +24,6 @@ let package = Package(
 			dependencies: [],
 			path: "LNTouchVisualizer",
 			exclude: [
-				"LNTouchVisualizerExample",
-				"Supplements"
 			],
 			publicHeadersPath: "include",
 			cSettings: [
