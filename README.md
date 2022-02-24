@@ -80,5 +80,6 @@ This will enable touch visualization for your entire scene by adding a passthrou
 
 If you’d like to use a touch visualization window on your own, check out the `LNTouchVisualizerWindow.h` header for more information.
 
+### Acknowledgements
 
-
+Based on [`COSTouchVisualizer`](https://github.com/joeblau/COSTouchVisualizer).
