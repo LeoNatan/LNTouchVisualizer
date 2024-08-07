@@ -2,7 +2,8 @@
 //  AppDelegate.swift
 //  LNTouchVisualizerExample
 //
-//  Created by Leo Natan on 3/24/21.
+//  Created by Léo Natan on 2021-03-24.
+//  Copyright © 2014-2024 Léo Natan. All rights reserved.
 //
 
 import UIKit

@@ -4,7 +4,7 @@ Touch visualizing framework for iOS.
 
 [![GitHub release](https://img.shields.io/github/release/LeoNatan/LNTouchVisualizer.svg)](https://github.com/LeoNatan/LNTouchVisualizer/releases) [![GitHub stars](https://img.shields.io/github/stars/LeoNatan/LNTouchVisualizer.svg)](https://github.com/LeoNatan/LNTouchVisualizer/stargazers) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/LeoNatan/LNTouchVisualizer/master/LICENSE) <span class="badge-paypal"><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BR68NJEJXGWL6" title="Donate to this project using PayPal"><img src="https://img.shields.io/badge/paypal-donate-yellow.svg?style=flat" alt="PayPal Donation Button" /></a></span>
 
-[![GitHub issues](https://img.shields.io/github/issues-raw/LeoNatan/LNTouchVisualizer.svg)](https://github.com/LeoNatan/LNTouchVisualizer/issues) [![GitHub contributors](https://img.shields.io/github/contributors/LeoNatan/LNPopupController.svg)](https://github.com/LeoNatan/LNTouchVisualizer/graphs/contributors) ![](https://img.shields.io/badge/swift%20package%20manager-compatible-green)
+[![GitHub issues](https://img.shields.io/github/issues-raw/LeoNatan/LNTouchVisualizer.svg)](https://github.com/LeoNatan/LNTouchVisualizer/issues) [![GitHub contributors](https://img.shields.io/github/contributors/LeoNatan/LNTouchVisualizer.svg)](https://github.com/LeoNatan/LNTouchVisualizer/graphs/contributors) ![](https://img.shields.io/badge/swift%20package%20manager-compatible-green)
 
 <p align="center"><img src="Supplements/touchvis.gif" width="360"/></p>
 

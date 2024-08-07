@@ -2,8 +2,8 @@
 //  LNTouchVisualizerWindow.h
 //  TouchVisualizer
 //
-//  Created by Joe Blau on 3/22/14.
-//  Copyright (c) 2014 conopsys. All rights reserved.
+//  Created by Léo Natan on 2021-03-24.
+//  Copyright © 2014-2024 Léo Natan. All rights reserved.
 //
 #import <UIKit/UIKit.h>
 #import <LNTouchVisualizer/LNTouchConfig.h>

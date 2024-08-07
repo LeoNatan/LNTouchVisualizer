@@ -2,8 +2,8 @@
 //  LNTouchImageFactory.h
 //  LNTouchVisualizer
 //
-//  Created by Joseph Blau on 12/2/17.
-//  Copyright © 2017 conopsys. All rights reserved.
+//  Created by Léo Natan on 2021-03-24.
+//  Copyright © 2014-2024 Léo Natan. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
