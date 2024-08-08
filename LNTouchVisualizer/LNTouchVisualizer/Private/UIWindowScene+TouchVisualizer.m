@@ -64,22 +64,6 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 	return NO;
 }
 
-- (void)sendEvent:(UIEvent *)event
-{
-	//This is to work around strange cases, where the event system decides to pass events to the visualizer window, despite it not being key or respond to hit-test challenges.
-	UIWindow* keyWindow;
-	if(@available(iOS 15.0, *))
-	{
-		keyWindow = self.windowScene.keyWindow;
-	}
-	else
-	{
-		keyWindow = [self.windowScene.windows objectAtIndex:MAX([self.windowScene.windows indexOfObject:self] - 1, 0)];
-	}
-	
-	[keyWindow sendEvent:event];
-}
-
 - (UIWindow *)overlayWindow
 {
 	return self;
@@ -102,11 +86,6 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 
 - (void)__ln_vis_sendEvent:(UIEvent *)event
 {
-	if([self isKindOfClass:_LNSceneTouchVisualizerWindow.class] || [self isKindOfClass:LNOverlayVisualizerWindow.class])
-	{
-		return;
-	}
-	
 	[self __ln_vis_sendEvent:event];
 	
 	if(self.windowScene.touchVisualizerEnabled)

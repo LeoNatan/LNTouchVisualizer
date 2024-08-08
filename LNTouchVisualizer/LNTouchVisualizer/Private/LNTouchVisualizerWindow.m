@@ -122,7 +122,10 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 {
 	[super sendEvent:event];
 	
-	[self visualizeEvent:event];
+	if(self.overlayWindow != self)
+	{
+		[self visualizeEvent:event];
+	}
 }
 
 - (void)visualizeEvent:(UIEvent*)event
