@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithFrame:(CGRect)frame touchVisualizationEnabled:(BOOL)touchVisualizationEnabled morphEnabled:(BOOL)morphEnabled contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig NS_DESIGNATED_INITIALIZER;
 
+- (void)visualizeEvent:(UIEvent*)event;
+
 @end
 
 NS_ASSUME_NONNULL_END

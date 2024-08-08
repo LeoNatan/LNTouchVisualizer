@@ -122,6 +122,11 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 {
 	[super sendEvent:event];
 	
+	[self visualizeEvent:event];
+}
+
+- (void)visualizeEvent:(UIEvent*)event
+{
 	if(self.touchVisualizationEnabled == NO)
 	{
 		return;
@@ -203,21 +208,6 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 	[self _scheduleFingerTipRemoval];    // We may not see all UITouchPhaseEnded/UITouchPhaseCancelled events.
 }
 
-
-- (UIWindow*)overlayWindow
-{
-	if(_overlayWindow == nil)
-	{
-		_overlayWindow = [[LNOverlayVisualizerWindow alloc] initWithFrame:self.frame];
-		_overlayWindow.userInteractionEnabled = NO;
-		_overlayWindow.windowLevel = UIWindowLevelStatusBar;
-		_overlayWindow.backgroundColor = UIColor.clearColor;
-		_overlayWindow.hidden = NO;
-		_overlayWindow.windowScene = self.windowScene;
-	}
-	
-	return _overlayWindow;
-}
 #pragma mark - Private
 
 - (void)_scheduleFingerTipRemoval

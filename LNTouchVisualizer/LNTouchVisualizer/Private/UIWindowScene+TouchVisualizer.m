@@ -8,6 +8,7 @@
 
 #import <LNTouchVisualizer/UIWindowScene+TouchVisualizer.h>
 #import <LNTouchVisualizer/LNTouchVisualizerWindow.h>
+#import "LNOverlayVisualizerWindow.h"
 
 @import ObjectiveC;
 
@@ -16,7 +17,6 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 @interface _LNSceneTouchVisualizerWindow : LNTouchVisualizerWindow @end
 @implementation _LNSceneTouchVisualizerWindow
 
-#ifndef LNPopupControllerEnforceStrictClean
 + (void)load
 {
 	@autoreleasepool {
@@ -48,7 +48,37 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 {
 	return NO;
 }
-#endif
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+	return nil;
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(nullable UIEvent *)event
+{
+	return NO;
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+	return NO;
+}
+
+- (void)sendEvent:(UIEvent *)event
+{
+	//This is to work around strange cases, where the event system decides to pass events to the visualizer window, despite it not being key or respond to hit-test challenges.
+	UIWindow* keyWindow;
+	if(@available(iOS 15.0, *))
+	{
+		keyWindow = self.windowScene.keyWindow;
+	}
+	else
+	{
+		keyWindow = [self.windowScene.windows objectAtIndex:MAX([self.windowScene.windows indexOfObject:self] - 1, 0)];
+	}
+	
+	[keyWindow sendEvent:event];
+}
 
 - (UIWindow *)overlayWindow
 {
@@ -72,16 +102,17 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 
 - (void)__ln_vis_sendEvent:(UIEvent *)event
 {
-	if([self isKindOfClass:[_LNSceneTouchVisualizerWindow class]])
+	if([self isKindOfClass:_LNSceneTouchVisualizerWindow.class] || [self isKindOfClass:LNOverlayVisualizerWindow.class])
 	{
 		return;
 	}
 	
+	[self __ln_vis_sendEvent:event];
+	
 	if(self.windowScene.touchVisualizerEnabled)
 	{
-		[self.windowScene.touchVisualizerWindow sendEvent:event];
+		[self.windowScene.touchVisualizerWindow visualizeEvent:event];
 	}
-	[self __ln_vis_sendEvent:event];
 }
 
 @end
@@ -96,7 +127,8 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 	{
 		rv = [_LNSceneTouchVisualizerWindow new];
 		rv.windowLevel = 100000000000;
-		rv.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0.0];
+		rv.backgroundColor = nil;
+		rv.alpha = 1.0;
 		rv.hidden = YES;
 		rv.userInteractionEnabled = NO;
 		rv.frame = UIScreen.mainScreen.bounds;
