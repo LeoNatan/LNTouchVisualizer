@@ -12,6 +12,16 @@
 #import <LNTouchVisualizer/LNTouchConfig.h>
 #import "LNTouchImageFactory.h"
 
+#import <os/log.h>
+
+#define DEBUG_120HZ_HACK DEBUG && 0
+
+#if DEBUG_120HZ_HACK
+
+static os_log_t __LN120HZLog = os_log_create("com.LeoNatan.LNTouchVisualizer", "120hz Hack");
+
+#endif
+
 static const NSTimeInterval TOUCH_VISUALIZER_WINDOW_REMOVE_DELAY = 0.2;
 static const NSTimeInterval TOUCH_VISUALIZER_PULSING_TIMER_DELAY = 0.6;
 static const NSTimeInterval TOUCH_VISUALIZER_MORPH_DURATION = 0.4;
@@ -19,6 +29,10 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 
 
 @interface LNTouchVisualizerWindow ()
+{
+	CADisplayLink* _displayLinkFor120Hz;
+	NSUInteger _120HzCount;
+}
 
 @property (nonatomic, strong) UIWindow* overlayWindow;
 @property (nonatomic) BOOL fingerTipRemovalScheduled;
@@ -28,26 +42,45 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 @property (nonatomic, strong) UIImage* touchImage;
 @property (nonatomic, strong) UIImage* rippleImage;
 
+- (void)_120HzTick;
+
 @end
 
 @implementation LNTouchVisualizerWindow
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame touchVisualizationEnabled:YES morphEnabled:YES contactConfig:nil rippleConfig:nil];
-}
-
-- (instancetype)initWithFrame:(CGRect)frame touchVisualizationEnabled:(BOOL)touchVisualizationEnabled morphEnabled:(BOOL)morphEnabled contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig
-{
 	self = [super initWithFrame:frame];
+	
 	if(self)
 	{
-		_morphEnabled = morphEnabled;
-		_touchVisualizationEnabled = touchVisualizationEnabled;
-		_touchContactConfig = contactConfig ?: [LNTouchConfig touchConfig];
-		_touchRippleConfig = rippleConfig ?: [LNTouchConfig rippleConfig];
+		[self _commonInitWithTouchVisualizationEnabled:YES morphEnabled:YES contactConfig:nil rippleConfig:nil];
+	}
+	
+	return self;
+}
+
+- (instancetype)initWithWindowScene:(UIWindowScene *)windowScene
+{
+	return [self initWithWindowScene:windowScene touchVisualizationEnabled:YES morphEnabled:YES contactConfig:nil rippleConfig:nil];
+}
+
+- (instancetype)initWithWindowScene:(UIWindowScene *)windowScene touchVisualizationEnabled:(BOOL)touchVisualizationEnabled morphEnabled:(BOOL)morphEnabled contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig
+{
+	self = [super initWithWindowScene:windowScene];
+	if(self)
+	{
+		[self _commonInitWithTouchVisualizationEnabled:touchVisualizationEnabled morphEnabled:morphEnabled contactConfig:contactConfig rippleConfig:rippleConfig];
 	}
 	return self;
+}
+
+- (void)_commonInitWithTouchVisualizationEnabled:(BOOL)touchVisualizationEnabled morphEnabled:(BOOL)morphEnabled contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig
+{
+	_morphEnabled = morphEnabled;
+	_touchVisualizationEnabled = touchVisualizationEnabled;
+	_touchContactConfig = contactConfig ?: [LNTouchConfig touchConfig];
+	_touchRippleConfig = rippleConfig ?: nil;//[LNTouchConfig rippleConfig];
 }
 
 - (void)setTouchContactConfig:(LNTouchConfig *)touchContactConfig
@@ -89,31 +122,12 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 
 - (UIImage *)rippleImage
 {
-	if(_rippleImage == nil)
+	if(_rippleImage == nil && self.touchRippleConfig != nil)
 	{
 		_rippleImage = [LNTouchImageFactory imageWithTouchConfig:self.touchRippleConfig];
 	}
 	
 	return _rippleImage;
-}
-
-#pragma mark - Active
-
-- (BOOL)anyScreenIsMirrored
-{
-	if([UIScreen instancesRespondToSelector:@selector(mirroredScreen)] == NO)
-	{
-		return NO;
-	}
-	
-	for(UIScreen *screen in UIScreen.screens)
-	{
-		if(screen.mirroredScreen != nil)
-		{
-			return YES;
-		}
-	}
-	return NO;
 }
 
 #pragma mark - UIWindow overrides
@@ -147,25 +161,29 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 			case UITouchPhaseRegionExited:
 				continue;
 			case UITouchPhaseBegan:
+				[self _start120HzHack];
 			case UITouchPhaseMoved:
 			{
-				// Generate ripples
-				LNTouchImageView *rippleView = [[LNTouchImageView alloc] initWithImage:self.rippleImage];
-				[self.overlayWindow addSubview:rippleView];
-				
-				rippleView.alpha = self.touchRippleConfig.alpha;
-				rippleView.center = [touch locationInView:self.overlayWindow];
-				
-				[UIView animateWithDuration:self.touchRippleConfig.fadeDuration delay:TOUCH_VISUALIZER_ZERO_DELAY options:UIViewAnimationOptionCurveEaseIn animations:^{
-					[rippleView setAlpha:0.0];
-					[rippleView setFrame:CGRectInset(rippleView.frame, 24, 24)];
-				} completion:^(BOOL finished) {
-					[rippleView removeFromSuperview];
-				}];
+				if(self.touchRippleConfig != nil)
+				{
+					// Generate ripples
+					LNTouchImageView *rippleView = [[LNTouchImageView alloc] initWithImage:self.rippleImage];
+					[self.overlayWindow addSubview:rippleView];
+					
+					rippleView.alpha = self.touchRippleConfig.alpha;
+					rippleView.center = [touch locationInView:self.overlayWindow];
+					
+					[UIView animateWithDuration:self.touchRippleConfig.fadeDuration delay:TOUCH_VISUALIZER_ZERO_DELAY options:UIViewAnimationOptionCurveEaseIn animations:^{
+						[rippleView setAlpha:0.0];
+						[rippleView setFrame:CGRectInset(rippleView.frame, 24, 24)];
+					} completion:^(BOOL finished) {
+						[rippleView removeFromSuperview];
+					}];
+				}
 			}
 			case UITouchPhaseStationary:
 			{
-				LNTouchImageView *touchView = (LNTouchImageView *)[self.overlayWindow viewWithTag:touch.hash];
+				UIView<LNTouchFadingView>* touchView = (UIView<LNTouchFadingView>*)[self.overlayWindow viewWithTag:touch.hash];
 				
 				if(touch.phase != UITouchPhaseStationary && touchView != nil && touchView.isFadingOut)
 				{
@@ -176,19 +194,23 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 				
 				if(touchView == nil && touch.phase != UITouchPhaseStationary)
 				{
-					touchView = [[LNTouchImageView alloc] initWithImage:self.touchImage];
-					[self.overlayWindow addSubview:touchView];
-					
-					if(self.morphEnabled)
+					if(self.touchContactConfig != nil)
 					{
-						if(self.timer)
-						{
-							[self.timer invalidate];
-						}
+						touchView = [[LNTouchImageView alloc] initWithImage:self.touchImage];
+						[self.overlayWindow addSubview:touchView];
 						
-						self.timer = [NSTimer scheduledTimerWithTimeInterval:TOUCH_VISUALIZER_PULSING_TIMER_DELAY target:self selector:@selector(performMorphWithTouchView:) userInfo:touchView repeats:YES];
+						if(self.morphEnabled)
+						{
+							if(self.timer)
+							{
+								[self.timer invalidate];
+							}
+							
+							self.timer = [NSTimer scheduledTimerWithTimeInterval:TOUCH_VISUALIZER_PULSING_TIMER_DELAY target:self selector:@selector(performMorphWithTouchView:) userInfo:touchView repeats:YES];
+						}
 					}
 				}
+				
 				if(!touchView.isFadingOut)
 				{
 					touchView.alpha = self.touchContactConfig.alpha;
@@ -221,7 +243,9 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 	}
 	
 	self.fingerTipRemovalScheduled = YES;
-	[self performSelector:@selector(removeInactiveFingerTips) withObject:nil afterDelay:0.1];
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[self removeInactiveFingerTips];
+	});
 }
 
 - (void)removeInactiveFingerTips
@@ -267,21 +291,28 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 		touchView.alpha = 0.0;
 	};
 	
+	dispatch_block_t completion = ^ {
+		[self _end120HzHack];
+	};
+	
 	if(animated)
 	{
 		[UIView setAnimationsEnabled:YES];
-		[UIView animateWithDuration:self.touchContactConfig.fadeDuration animations:animations];
+		[UIView animateWithDuration:self.touchContactConfig.fadeDuration animations:animations completion:^(BOOL finished) {
+			completion();
+		}];
 		[UIView setAnimationsEnabled:animationsWereEnabled];
 	}
 	else
 	{
 		animations();
+		completion();
 	}
 	
 	touchView.fadingOut = YES;
-	[touchView performSelector:@selector(removeFromSuperview)
-					withObject:nil
-					afterDelay:self.touchContactConfig.fadeDuration];
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.touchContactConfig.fadeDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+		[touchView removeFromSuperview];
+	});
 }
 
 - (BOOL)shouldAutomaticallyRemoveFingerTipForTouch:(UITouch *)touch;
@@ -371,6 +402,61 @@ static const NSTimeInterval TOUCH_VISUALIZER_ZERO_DELAY = 0.0;
 			}];
 		}];
 	}];
+}
+
+- (void)_120HzTick
+{
+//#if DEBUG_120HZ_HACK
+//	os_log_debug(__LN120HZLog, "120hz hack tick");
+//#endif
+}
+
+- (void)_start120HzHack
+{
+	_120HzCount++;
+	
+	if(_120HzCount != 1)
+	{
+#if DEBUG_120HZ_HACK
+		os_log_debug(__LN120HZLog, "Start of 120hz hack ignored (%@)", @(_120HzCount));
+#endif
+		return;
+	}
+	
+#if DEBUG_120HZ_HACK
+	os_log_debug(__LN120HZLog, "Starting 120hz hack");
+#endif
+	
+	_displayLinkFor120Hz = [CADisplayLink displayLinkWithTarget:self selector:@selector(_120HzTick)];
+	CGFloat max = UIScreen.mainScreen.maximumFramesPerSecond;
+	if(@available(iOS 15.0, *))
+	{
+		_displayLinkFor120Hz.preferredFrameRateRange = CAFrameRateRangeMake(max, max, max);
+	}
+	else
+	{
+		_displayLinkFor120Hz.preferredFramesPerSecond = max;
+	}
+	[_displayLinkFor120Hz addToRunLoop:NSRunLoop.currentRunLoop forMode:NSRunLoopCommonModes];
+}
+
+- (void)_end120HzHack
+{
+	_120HzCount--;
+	
+	if(_120HzCount > 0)
+	{
+#if DEBUG_120HZ_HACK
+		os_log_debug(__LN120HZLog, "End of 120hz hack ignored (%@)", @(_120HzCount));
+#endif
+		return;
+	}
+	
+#if DEBUG_120HZ_HACK
+	os_log_debug(__LN120HZLog, "Ending 120hz hack");
+#endif
+	[_displayLinkFor120Hz invalidate];
+	_displayLinkFor120Hz = nil;
 }
 
 @end

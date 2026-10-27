@@ -18,7 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) LNTouchConfig* touchContactConfig;
 @property (nonatomic, strong) LNTouchConfig* touchRippleConfig;
 
-- (instancetype)initWithFrame:(CGRect)frame touchVisualizationEnabled:(BOOL)touchVisualizationEnabled morphEnabled:(BOOL)morphEnabled contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFrame:(CGRect)frame NS_DESIGNATED_INITIALIZER  API_DEPRECATED("Use init(windowScene:touchVisualizationEnabled:morphEnabled:contactConfig:rippleConfig:) instead.", ios(2.0, 26.0));
+- (instancetype)initWithWindowScene:(UIWindowScene *)windowScene touchVisualizationEnabled:(BOOL)touchVisualizationEnabled morphEnabled:(BOOL)morphEnabled contactConfig:(nullable LNTouchConfig*)contactConfig rippleConfig:(nullable LNTouchConfig*)rippleConfig NS_DESIGNATED_INITIALIZER;
 
 - (void)visualizeEvent:(UIEvent*)event;
 

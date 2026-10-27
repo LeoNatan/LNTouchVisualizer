@@ -104,14 +104,14 @@ static const void* LNTouchVisualizerWindowKey = &LNTouchVisualizerWindowKey;
 	
 	if(rv == nil)
 	{
-		rv = [_LNSceneTouchVisualizerWindow new];
+		rv = [[_LNSceneTouchVisualizerWindow alloc] initWithWindowScene:self];
 		rv.windowLevel = 100000000000;
-		rv.backgroundColor = nil;
 		rv.alpha = 1.0;
 		rv.hidden = YES;
 		rv.userInteractionEnabled = NO;
-		rv.frame = UIScreen.mainScreen.bounds;
-		rv.windowScene = self;
+		
+		rv.rootViewController = [UIViewController new];
+		rv.rootViewController.view.backgroundColor = UIColor.clearColor;
 		
 		objc_setAssociatedObject(self, LNTouchVisualizerWindowKey, rv, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 	}

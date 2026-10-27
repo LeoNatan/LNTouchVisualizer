@@ -8,10 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LNTouchImageView : UIImageView
+@class LNTouchConfig;
+
+@protocol LNTouchFadingView <NSObject>
 
 @property (nonatomic) NSTimeInterval timestamp;
-@property (nonatomic) BOOL shouldAutomaticallyRemoveAfterTimeout;
 @property (nonatomic, getter=isFadingOut) BOOL fadingOut;
+@property (nonatomic) BOOL shouldAutomaticallyRemoveAfterTimeout;
+
+@end
+
+@interface LNTouchImageView : UIImageView <LNTouchFadingView>
 
 @end

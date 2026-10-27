@@ -11,7 +11,7 @@
 		39843F1A260BA06D004CCF55 /* LNOverlayVisualizerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 39843F18260BA06D004CCF55 /* LNOverlayVisualizerWindow.h */; };
 		39C3806E260B783E00ACF910 /* LNTouchVisualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C3806C260B783E00ACF910 /* LNTouchVisualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		39C3807E260B78A500ACF910 /* LNTouchVisualizerWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C3807C260B78A500ACF910 /* LNTouchVisualizerWindow.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		39C3807F260B78A500ACF910 /* LNTouchVisualizerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.m */; };
+		39C3807F260B78A500ACF910 /* LNTouchVisualizerWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = 39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.mm */; };
 		39C38082260B78B200ACF910 /* LNTouchImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 39C38080260B78B200ACF910 /* LNTouchImageView.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		39C38083260B78B200ACF910 /* LNTouchImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C38081260B78B200ACF910 /* LNTouchImageView.m */; };
 		39C38086260B78BA00ACF910 /* LNTouchConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C38084260B78BA00ACF910 /* LNTouchConfig.m */; };
@@ -29,7 +29,7 @@
 		39C3806C260B783E00ACF910 /* LNTouchVisualizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LNTouchVisualizer.h; sourceTree = "<group>"; };
 		39C3806D260B783E00ACF910 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39C3807C260B78A500ACF910 /* LNTouchVisualizerWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTouchVisualizerWindow.h; sourceTree = "<group>"; };
-		39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTouchVisualizerWindow.m; sourceTree = "<group>"; };
+		39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LNTouchVisualizerWindow.mm; sourceTree = "<group>"; };
 		39C38080260B78B200ACF910 /* LNTouchImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNTouchImageView.h; sourceTree = "<group>"; };
 		39C38081260B78B200ACF910 /* LNTouchImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTouchImageView.m; sourceTree = "<group>"; };
 		39C38084260B78BA00ACF910 /* LNTouchConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNTouchConfig.m; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 		39C380BA260B942600ACF910 /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.m */,
+				39C3807D260B78A500ACF910 /* LNTouchVisualizerWindow.mm */,
 				39843F18260BA06D004CCF55 /* LNOverlayVisualizerWindow.h */,
 				39843F17260BA06D004CCF55 /* LNOverlayVisualizerWindow.m */,
 				39C38080260B78B200ACF910 /* LNTouchImageView.h */,
@@ -185,7 +185,7 @@
 				39C3808D260B91A700ACF910 /* LNTouchImageFactory.m in Sources */,
 				39C38086260B78BA00ACF910 /* LNTouchConfig.m in Sources */,
 				39C38083260B78B200ACF910 /* LNTouchImageView.m in Sources */,
-				39C3807F260B78A500ACF910 /* LNTouchVisualizerWindow.m in Sources */,
+				39C3807F260B78A500ACF910 /* LNTouchVisualizerWindow.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,9 +242,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -298,9 +298,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_FUNCTION = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -320,6 +320,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LNTouchVisualizer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -342,6 +343,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = LNTouchVisualizer/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

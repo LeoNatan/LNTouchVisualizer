@@ -7,7 +7,12 @@
 //
 
 #import "LNTouchImageView.h"
+#import <LNTouchVisualizer/LNTouchConfig.h>
 
 @implementation LNTouchImageView
+
+@synthesize fadingOut=_fadingOut;
+@synthesize timestamp=_timestamp;
+@synthesize shouldAutomaticallyRemoveAfterTimeout=_shouldAutomaticallyRemoveAfterTimeout;
 
 @end
